@@ -29,3 +29,19 @@ resilience4j:
         max-attempts: 7
         wait-duration: 1s
         enable-exponential-backoff: true
+  circuitbreaker:
+    instances:
+      foo-bar:
+        register-health-indicator: true
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, circuitbreakers
+  endpoint:
+    health:
+      show-details: always

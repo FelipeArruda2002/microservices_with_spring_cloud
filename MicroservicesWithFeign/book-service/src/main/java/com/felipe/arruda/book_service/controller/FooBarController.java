@@ -1,6 +1,6 @@
 package com.felipe.arruda.book_service.controller;
 
-import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +16,14 @@ public class FooBarController {
     private Logger logger = LoggerFactory.getLogger(FooBarController.class);
 
     @GetMapping("/foo-bar")
-    @Retry(name = "foo-bar", fallbackMethod = "fallbackMethod")
+    //@Retry(name = "foo-bar", fallbackMethod = "fallbackMethod")
+    @CircuitBreaker(name = "foo-bar", fallbackMethod = "fallbackMethod")
     public String fooBar() {
         logger.info("Request to foo-bar is received!!");
 
         ResponseEntity<String> response = new RestTemplate()
                 .getForEntity("http://localhost:8000/book-service", String.class);
+
         return response.getBody();
     }
 
