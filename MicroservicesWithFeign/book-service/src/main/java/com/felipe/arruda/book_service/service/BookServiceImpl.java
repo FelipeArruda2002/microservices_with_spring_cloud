@@ -29,7 +29,7 @@ public class BookServiceImpl implements BookService {
         Exchange exchange = exchangeProxy.getExchange(priceBook, "USD", currency);
         book.setPrice(exchange.convertedValue());
         book.setCurrency(currency);
-        book.setEnvironment("Port: " + informationService.getServerPort());
+        book.setEnvironment(String.format("Book Port: (%s) | Exchange Port: (%s)", informationService.getServerPort(), exchange.environment()));
 
         return book;
     }
