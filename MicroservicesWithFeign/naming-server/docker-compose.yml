@@ -1,0 +1,11 @@
+services:
+  naming-server:
+    image: felipearruda15/naming-server:0.0.1-SNAPSHOT
+    ports:
+      - 8761:8761
+    networks:
+      - arruda-network
+networks:
+  arruda-network:
+    name: arruda-network
+    driver: bridge
