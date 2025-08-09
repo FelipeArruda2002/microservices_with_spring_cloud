@@ -5,6 +5,13 @@ services:
       - 8761:8761
     networks:
       - arruda-network
+  zipkin-server:
+    image: openzipkin/zipkin:3.5.1
+    ports:
+      - 9411:9411
+    restart: always
+    networks:
+          - arruda-network
 networks:
   arruda-network:
     name: arruda-network
