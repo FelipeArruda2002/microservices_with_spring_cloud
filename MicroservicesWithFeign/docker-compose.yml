@@ -14,6 +14,32 @@ services:
       - zipkin-server
     networks:
       - arruda-network
+  db-book:
+    image: mysql:9.3.0
+    restart: always
+    ports:
+      - 3310:3306
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_USER: arruda123
+      MYSQL_PASSWORD: arruda123
+      MYSQL_DATABASE: book_service
+    networks:
+      - arruda-network
+  db-exchange:
+    image: mysql:9.3.0
+    restart: always
+    ports:
+      - 3308:3306
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_USER: arruda123
+      MYSQL_PASSWORD: arruda123
+      MYSQL_DATABASE: exchange_service
+    networks:
+      - arruda-network
   api-gateway:
     image: felipearruda15/api-gateway:0.0.1-SNAPSHOT
     ports:
