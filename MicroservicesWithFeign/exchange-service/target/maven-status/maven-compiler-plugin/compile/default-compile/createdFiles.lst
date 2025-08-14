@@ -1,0 +1,9 @@
+com\felipe\arruda\exchange_service\config\WebConfig.class
+com\felipe\arruda\exchange_service\service\ExchangeService.class
+com\felipe\arruda\exchange_service\controller\ExchangeController.class
+com\felipe\arruda\exchange_service\Startup.class
+com\felipe\arruda\exchange_service\config\OpenApiConfig.class
+com\felipe\arruda\exchange_service\environment\InstanceInformationService.class
+com\felipe\arruda\exchange_service\model\Exchange.class
+com\felipe\arruda\exchange_service\repository\ExchangeRepository.class
+com\felipe\arruda\exchange_service\service\ExchangeServiceImpl.class

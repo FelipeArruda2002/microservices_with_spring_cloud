@@ -6,6 +6,7 @@ services:
     restart: always
     networks:
           - arruda-network
+
   naming-server:
     image: felipearruda15/naming-server:0.0.1-SNAPSHOT
     ports:
@@ -14,6 +15,7 @@ services:
       - zipkin-server
     networks:
       - arruda-network
+
   db-book:
     image: mysql:9.3.0
     restart: always
@@ -27,6 +29,7 @@ services:
       MYSQL_DATABASE: book_service
     networks:
       - arruda-network
+
   db-exchange:
     image: mysql:9.3.0
     restart: always
@@ -40,6 +43,7 @@ services:
       MYSQL_DATABASE: exchange_service
     networks:
       - arruda-network
+
   api-gateway:
     image: felipearruda15/api-gateway:0.0.1-SNAPSHOT
     ports:
@@ -51,6 +55,28 @@ services:
     environment:
       SPRING_ZIPKIN_BASEURL: http://zipkin-server:9411
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://naming-server:8761/eureka
+    networks:
+      - arruda-network
+
+  exchange-service:
+    image: felipearruda15/exchange-service:0.0.1-SNAPSHOT
+    ports:
+      - 8000:8000
+    restart: always
+    build:
+      context: ./exchange-service
+      dockerfile: Dockerfile
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING_ZIPKIN_BASEURL: http://zipkin-server:9411
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING_DATASOURCE_URL: jdbc:mysql://db-exchange:3306/exchange_service?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING_DATASOURCE_USERNAME: arruda123
+      SPRING_DATASOURCE_PASSWORD: arruda123
+    depends_on:
+      - zipkin-server
+      - naming-server
+      - db-exchange
     networks:
       - arruda-network
 networks:
