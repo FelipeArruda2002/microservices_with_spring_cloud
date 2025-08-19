@@ -79,6 +79,29 @@ services:
       - db-exchange
     networks:
       - arruda-network
+
+  book-service:
+    image: felipearruda15/book-service:0.0.1-SNAPSHOT
+    ports:
+      - 8100:8100
+    restart: always
+    build:
+      context: ./book-service
+      dockerfile: Dockerfile
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING_ZIPKIN_BASEURL: http://zipkin-server:9411
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING_DATASOURCE_URL: jdbc:mysql://db-book:3306/book_service?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING_DATASOURCE_USERNAME: arruda123
+      SPRING_DATASOURCE_PASSWORD: arruda123
+    depends_on:
+      - zipkin-server
+      - naming-server
+      - db-exchange
+    networks:
+      - arruda-network
+
 networks:
   arruda-network:
     name: arruda-network
