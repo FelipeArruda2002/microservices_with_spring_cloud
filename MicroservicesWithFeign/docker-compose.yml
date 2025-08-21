@@ -8,7 +8,7 @@ services:
           - arruda-network
 
   naming-server:
-    image: felipearruda15/naming-server:latest
+    image: felipearruda15/naming-server:0.0.1-SNAPSHOT
     ports:
       - 8761:8761
     depends_on:
@@ -45,7 +45,7 @@ services:
       - arruda-network
 
   api-gateway:
-    image: felipearruda15/api-gateway:latest
+    image: felipearruda15/api-gateway:0.0.1-SNAPSHOT
     ports:
       - 8765:8765
     restart: always
@@ -59,10 +59,13 @@ services:
       - arruda-network
 
   exchange-service:
-    image: felipearruda15/exchange-service:latest
+    image: felipearruda15/exchange-service:0.0.1-SNAPSHOT
     ports:
       - 8000:8000
     restart: always
+    build:
+      context: ./exchange-service
+      dockerfile: Dockerfile
     environment:
       TZ: America/Sao_Paulo
       SPRING_ZIPKIN_BASEURL: http://zipkin-server:9411
@@ -78,7 +81,7 @@ services:
       - arruda-network
 
   book-service:
-    image: felipearruda15/book-service:latest
+    image: felipearruda15/book-service:0.0.1-SNAPSHOT
     ports:
       - 8100:8100
     restart: always
